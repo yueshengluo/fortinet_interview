@@ -15,8 +15,6 @@ templates = Jinja2Templates(directory="templates/")
 def get_accordion(request: Request):
     upload_path = './static/upload'
     file_names = [f for f in listdir(upload_path)]
-    #onlyfiles = [f for f in listdir(upload_path) if isfile(join(upload_path, f))]
-    print(file_names)
     if  len(file_names) == 0:
         result = "Upload a file first to download"
         return templates.TemplateResponse('accordion.html', context={'request': request, 'result': result,
@@ -25,7 +23,6 @@ def get_accordion(request: Request):
     result = "Select a file to download"
     return templates.TemplateResponse('accordion.html', context={'request': request, 'result': result,
                                                                  'tag': tag,'filenames' :file_names })
-
 
 @router.post("/accordion", response_class=HTMLResponse)
 def post_accordion(request: Request, tag: str = Form(...)):

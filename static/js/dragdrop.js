@@ -1,36 +1,18 @@
-import { detect, dragdrop } from './imagehelper.js'
+import { dragdrop } from './helper.js'
 
 $(function () {
   dragdrop();
 
-  function preparedata (file) {
-    console.log("Preparing ...")
-    const img = document.createElement("img");
-    img.src = URL.createObjectURL(file);
-    detect(img.src, function (result) {
-      let winWidth = $(window).width();
-      let imgWidth = result.imgWidth;
-      let imgHeight = result.imgHeight;
-      let data = { 'winWidth': winWidth, 'imgWidth': imgWidth, 'imgHeight': imgHeight };
-      let jdata = JSON.stringify(data);
-      let fd = new FormData();
-      fd.append('imgdata', jdata);
-      fd.append('file', file);
-      console.log("fd: ", fd);
-      uploadData(fd);
-    });
-  }
   function preparefile (file,rename) {
     console.log("Preparing ...")
     let data = { 'rename': rename};
-    let jdata = JSON.stringify(data);
-    let fd = new FormData();
-    fd.append('rename', jdata);
-    fd.append('file', file);
-    console.log("fd: ", fd);
-    uploadData(fd);
+    let jsonData = JSON.stringify(data);
+    let fromData = new FormData();
+    fromData.append('rename', jsonData);
+    fromData.append('file', file);
+    console.log("fromData: ", fromData);
+    uploadData(fromData);
   }
-
 
   // Drop
   $('.upload-area').on('drop', function (e) {
@@ -49,9 +31,7 @@ $(function () {
 
     let winWidth = $("#window_width").val();
     let dropped = file[0];
-//    if (dropped.type.match(imageType)) {
-//      preparedata(dropped);
-//    }
+
     let filesize = file[0].size
     console.log("drop file.size: ", filesize);
     if (filesize/ 1024 / 1024 > 10){
@@ -70,11 +50,6 @@ $(function () {
     console.log("done drop.")
   });
 
-
-  // Open file selector on div click
-//  $("#uploadfile").click(function () {
-//    $("#file").click();
-//  });
 
   // file selected
   $("#file").change(function () {
@@ -105,7 +80,6 @@ $(function () {
 });
 
 
-
 // Sending AJAX request and upload file
 function uploadData (formdata) {
 
@@ -122,10 +96,8 @@ function uploadData (formdata) {
 }
 
 function updatetags (data) {
-  //let original = `<img src="/${data.thumb_path}" class="responsive" alt="">`;
   let original = `<h4>original name:</h4><b> ${data.original_name} <h4>New name:</h4> ${data.new_name}</b>`;
   $("#original").html(original);
-
   $("#howto").html("Drag and Drop file here<br />Or<br />Click to Upload")
 }
 

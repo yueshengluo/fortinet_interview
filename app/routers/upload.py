@@ -48,12 +48,6 @@ async def post_upload(rename:tuple, file: UploadFile = File(...)):
     with open(str(new_path), 'wb') as myfile:
         contents = await file.read()
         myfile.write(contents)
-    # create a thumb image and save it
-    #thumb(img_full_path, winWidth, imgWidth, imgHeight)
-    # create the thumb path
-    # ext is like .png or .jpg
-    #filepath, ext = os.path.splitext(img_full_path)
-    #thumb_path = filepath + ".thumbnail"+ext
 
     if new_name:
         new_name = new_name+'.'+str(file.filename).split('.')[-1]
