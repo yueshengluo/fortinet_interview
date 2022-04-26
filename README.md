@@ -19,7 +19,7 @@ Go to the Upload and Download page on the top left of the navigation bar
 ## Installation & Usage
 
 ```bash
-$ git clone git@github.com:yueshengluo/fortinet_interview.git
+$ git clone https://github.com/yueshengluo/fortinet_interview.git
 # change the directory
 $ cd fortinet_interview
 # install packages
